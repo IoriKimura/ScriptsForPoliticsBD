@@ -1,0 +1,13 @@
+SET SCHEMA 'practice2';
+
+BEGIN ISOLATION LEVEL REPEATABLE READ;
+	SELECT 1;
+	SELECT * FROM temp;
+	
+SET SCHEMA 'practice2';
+BEGIN;
+	CREATE TABLE temp
+	(
+		temp_name TEXT NOT NULL
+	);
+COMMIT;
