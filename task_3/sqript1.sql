@@ -35,3 +35,8 @@ UPDATE users SET category = 'BPP';
 --10. Vacuum Verbose и pg_stat_progress_vacuum
 VACUUM VERBOSE;
 SELECT * FROM pg_stat_progress_vacuum;
+
+--11. Вернуть всё обратно
+SET MAINTENANCE_WORK_MEM TO DEFAULT;
+SELECT pg_reload_conf();
+
