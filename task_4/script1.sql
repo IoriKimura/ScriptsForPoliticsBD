@@ -48,3 +48,23 @@ DELETE FROM public.orders WHERE id = 6;
 SELECT pg_current_wal_insert_lsn(); --0/C7876DE8
 
 SELECT pg_walfile_name('0/C7873F80');
+
+SELECT total_checkpoints FROM
+(SELECT (checkpoints_timed+checkpoints_req) AS total_checkpoints FROM pg_stat_bgwriter
+) AS sub;
+
+SELECT
+
+total_checkpoints,
+
+seconds_since_start / total_checkpoints / 60 AS seconds_between_checkpoints
+FROM
+
+(SELECT
+
+EXTRACT (EPOCH FROM (now() - pg_postmaster_start_time())) AS seconds_since_start,
+(checkpoints_timed+checkpoints_req) AS total_checkpoints
+
+FROM pg_stat_bgwriter
+
+) AS sub;
